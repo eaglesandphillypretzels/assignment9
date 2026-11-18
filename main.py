@@ -22,11 +22,12 @@ templates = Jinja2Templates(directory="templates")
 class OperationRequest(BaseModel):
     a: float = Field(..., description="The first number")
     b: float = Field(..., description="The second number")
+    c: float = Field(..., description="The third number (optional, default is 0)")
 
-    @field_validator('a', 'b')  # Correct decorator for Pydantic 1.x
+    @field_validator('a', 'b', 'c')  # Correct decorator for Pydantic 1.x
     def validate_numbers(cls, value):
         if not isinstance(value, (int, float)):
-            raise ValueError('Both a and b must be numbers.')
+            raise ValueError('All parameters must be numbers.')
         return value
 
 # Pydantic model for successful response
@@ -66,10 +67,10 @@ async def read_root(request: Request):
 @app.post("/add", response_model=OperationResponse, responses={400: {"model": ErrorResponse}})
 async def add_route(operation: OperationRequest):
     """
-    Add two numbers.
+    Add three numbers.
     """
     try:
-        result = add(operation.a, operation.b)
+        result = add(operation.a, operation.b, operation.c)
         return OperationResponse(result=result)
     except Exception as e:
         logger.error(f"Add Operation Error: {str(e)}")
@@ -78,10 +79,10 @@ async def add_route(operation: OperationRequest):
 @app.post("/subtract", response_model=OperationResponse, responses={400: {"model": ErrorResponse}})
 async def subtract_route(operation: OperationRequest):
     """
-    Subtract two numbers.
+    Subtract three numbers.
     """
     try:
-        result = subtract(operation.a, operation.b)
+        result = subtract(operation.a, operation.b, operation.c)
         return OperationResponse(result=result)
     except Exception as e:
         logger.error(f"Subtract Operation Error: {str(e)}")
@@ -90,10 +91,10 @@ async def subtract_route(operation: OperationRequest):
 @app.post("/multiply", response_model=OperationResponse, responses={400: {"model": ErrorResponse}})
 async def multiply_route(operation: OperationRequest):
     """
-    Multiply two numbers.
+    Multiply three numbers.
     """
     try:
-        result = multiply(operation.a, operation.b)
+        result = multiply(operation.a, operation.b, operation.c)
         return OperationResponse(result=result)
     except Exception as e:
         logger.error(f"Multiply Operation Error: {str(e)}")
@@ -102,10 +103,10 @@ async def multiply_route(operation: OperationRequest):
 @app.post("/divide", response_model=OperationResponse, responses={400: {"model": ErrorResponse}})
 async def divide_route(operation: OperationRequest):
     """
-    Divide two numbers.
+    Divide three numbers.
     """
     try:
-        result = divide(operation.a, operation.b)
+        result = divide(operation.a, operation.b, operation.c)
         return OperationResponse(result=result)
     except ValueError as e:
         logger.error(f"Divide Operation Error: {str(e)}")
