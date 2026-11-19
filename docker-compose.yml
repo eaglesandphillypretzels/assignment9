@@ -8,9 +8,6 @@
 # the FastAPI Calculator application. Docker Compose is a tool that allows you
 # to define and manage multi-container Docker applications using a YAML file.
 
-# Version Specification
-version: '3.9'  # Specify the version of Docker Compose syntax to use.
-
 # Services Definition
 services:
   # Service: web
@@ -47,7 +44,7 @@ services:
 # Detailed Explanation of Each Component
 # ---------------------------------------------
 
-# 1. Version Specification (`version: '3.8'`)
+# 1. Version Specification - OBSOLETE (`version: '3.8'`)
 #    - Defines the version of the Docker Compose file format to use.
 #    - It's essential to specify the version to ensure compatibility and access to the latest features.
 #    - Version '3.8' is widely supported and includes modern Docker Compose functionalities.
